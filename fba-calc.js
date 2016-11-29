@@ -195,10 +195,21 @@ function calculateFees(length, width, height, weight, isApparel, isMedia, isPro)
       sizeTier = "LRG_STND";
     }
   } else {
-    if (girthLength > 165 || Math.max(length, width, height) > 60 || median([length, width, height]) > 30){
-      sizeTier = "MED_OVER";
-    } else {
-      sizeTier = "SML_OVER";
+    if(girthLength <= 130 && Math.max(length, width, height) <= 60 && median([length, width, height]) <= 30)
+    {
+        sizeTier = "SML_OVER";
+    }
+    else if(girthLength <= 130 && Math.max(length, width, height) <= 108)
+    {
+        sizeTier = "MED_OVER";
+    }
+    else if(girthLength <= 165 && Math.max(length, width, height) <= 108)
+    {
+        sizeTier = "LRG_OVER";
+    }
+    else
+    {
+        sizeTier = "SPL_OVER";
     }
   }
   
