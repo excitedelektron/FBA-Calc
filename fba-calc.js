@@ -107,29 +107,62 @@ function getCubicFoot(length, width, height) {
 }
 
 function getWeightHandling(sizeTier, outbound, isMedia) {
-  // Find the correct weight handling cost
-  if (sizeTier === "SML_STND") {
-    return 0.5;
-  }
-  
-  // Large Standard
-  if (sizeTier === "LRG_STND") {
-    if (outbound <=1 ) {
-      return 0.63;
+    // Find the correct weight handling cost
+    if (sizeTier === "SML_STND") {
+      return 0.5;
     }
-    if (isMedia) {
-      if (outbound <= 2) {
-        return 0.88;
-      } else {
-        return 0.88 + (Math.ceil(outbound) - 2) * 0.41;
+
+    // Large Standard
+    if (sizeTier === "LRG_STND") {
+      if (outbound <=1 ) {
+        return isMedia ? 0.85 : 0.96;
       }
-    } else {
-      if (outbound <= 2) {
-        return 1.59;
+      if (isMedia) {
+        if (outbound <= 2) {
+          return 1.24;
+        } else {
+          return 1.24 + (Math.ceil(outbound) - 2) * 0.41;
+        }
       } else {
-        return 1.59 + (Math.ceil(outbound) - 2) * 0.39;
+        if (outbound <= 2) {
+          return 1.95;
+        } else {
+          return 1.95 + (Math.ceil(outbound) - 2) * 0.39;
+        }
       }
     }
+
+    // SPL OVER
+    if (sizeTier === "SPL_OVER") {
+      if (outbound <= 90) {
+        return 124.58;
+      } else {
+        return 124.58 + (Math.ceil(outbound) - 90) * 0.92;
+      }
+    }
+
+    // Large Oversize
+    if (sizeTier === "LRG_OVER") {
+      if (outbound <= 90) {
+        return 63.98;
+      } else {
+        return 63.98 + (Math.ceil(outbound) - 90) * 0.80;
+      }
+    }
+
+    if (sizeTier === "MED_OVER") {
+      if (outbound <= 2) {
+        return 2.73;
+      } else {
+        return 2.73 + (Math.ceil(outbound) - 2) * 0.39;
+      }
+    }
+
+    if (outbound <= 2) {
+      return 1.59;
+    }
+    return 1.59 + (Math.ceil(outbound) - 2) * 0.39;
+
   }
   
   // SPL OVER
